@@ -47,7 +47,7 @@ func notFound(c echo.Context) error {
 func main() {
 	e := echo.New()
 
-	e.Renderer = NewTemplateRenderer("public/views/*.html")
+	e.Renderer = NewTemplateRenderer("public/layouts/base.html", "public/views/")
 
 	e.GET("/", handler)
 	e.GET("/*", notFound)
@@ -142,21 +142,27 @@ func findUsersImNotFollowing(followings []FollowersFile, followers []FollowersFi
         }
     }
 
-    fmt.Printf("Users I'm not following back: %+v\n", notFollowingBack) // Logging statement
+    fmt.Printf("Users I'm not following back: %+v\n", notFollowingBack)
 
     return notFollowingBack
 }
 
-func NewTemplateRenderer(dir string) *TemplateRenderer {
+func NewTemplateRenderer(baseTemplate, templateDir string) *TemplateRenderer {
 	return &TemplateRenderer{
-		templates: template.Must(template.ParseGlob(dir)),
+		baseTemplate: template.Must(template.ParseFiles(baseTemplate)),
+		templates:    template.Must(template.ParseGlob(templateDir + "*.html")),
 	}
 }
 
 type TemplateRenderer struct {
-	templates *template.Template
+	baseTemplate *template.Template
+	templates    *template.Template
 }
 
 func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
+	if err := t.baseTemplate.ExecuteTemplate(w, "base.html", data); err != nil {
+		return err
+	}
+
 	return t.templates.ExecuteTemplate(w, name, data)
 }

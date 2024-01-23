@@ -1,9 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
+{{ define "title" }}Main{{ end }}
 
-<head>
-    <title>instacheck</title>
-</head>
+<section id="instructions">
+    <h1>How to get started</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore illo possimus, quas odit ipsa nobis animi
+        dolorum consequuntur, eaque, sequi eius. Sunt doloremque illo quisquam! Deserunt beatae quis deleniti
+        distinctio.</p>
+</section>
+
+<hr />
+<br />
+
+<section id="checker">
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="followers" class="file-label">Followers</label>
+        <input type="file" id="followers" name="followers">
+
+        <label for="following" class="file-label">Followings</label>
+        <input type="file" id="following" name="following">
+
+        <input type="submit" value="Upload Files">
+    </form>
+
+    <div class="result-container">
+        {{ if .UsersNotFollowingBack }}
+        <div class="header-container">
+            <h2>Users not following back:</h2>
+            <div class="scroll-list">
+                <ul>
+                    {{ range .UsersNotFollowingBack }}
+                    <li>{{ . }}</li>
+                    {{ end }}
+                </ul>
+            </div>
+        </div>
+        {{ end }}
+
+        {{ if .NotFollowingUsers }}
+        <div class="header-container">
+            <h2>You're not following back:</h2>
+            <div class="scroll-list">
+                <ul>
+                    {{ range .NotFollowingUsers }}
+                    <li>{{ . }}</li>
+                    {{ end }}
+                </ul>
+            </div>
+        </div>
+        {{ end }}
+    </div>
+</section>
 <style>
     .result-container {
         display: flex;
@@ -25,55 +70,3 @@
         align-items: center;
     }
 </style>
-
-<body>
-    <section id="instructions">
-        <h1>How to get started</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore illo possimus, quas odit ipsa nobis animi dolorum consequuntur, eaque, sequi eius. Sunt doloremque illo quisquam! Deserunt beatae quis deleniti distinctio.</p>
-    </section>
-
-    <hr />
-    <br />
-
-    <section id="checker">
-        <form action="/upload" method="post" enctype="multipart/form-data">
-            <label for="followers" class="file-label">Followers</label>
-            <input type="file" id="followers" name="followers">
-
-            <label for="following" class="file-label">Followings</label>
-            <input type="file" id="following" name="following">
-
-            <input type="submit" value="Upload Files">
-        </form>
-
-        <div class="result-container">
-            {{ if .UsersNotFollowingBack }}
-            <div class="header-container">
-                <h2>Users not following back:</h2>
-                <div class="scroll-list">
-                    <ul>
-                        {{ range .UsersNotFollowingBack }}
-                        <li>{{ . }}</li>
-                        {{ end }}
-                    </ul>
-                </div>
-            </div>
-            {{ end }}
-
-            {{ if .NotFollowingUsers }}
-            <div class="header-container">
-                <h2>You're not following back:</h2>
-                <div class="scroll-list">
-                    <ul>
-                        {{ range .NotFollowingUsers }}
-                        <li>{{ . }}</li>
-                        {{ end }}
-                    </ul>
-                </div>
-            </div>
-            {{ end }}
-        </div>
-    </section>
-</body>
-
-</html>
