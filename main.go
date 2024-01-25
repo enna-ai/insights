@@ -13,7 +13,7 @@ import (
 type PageVariables struct {
 	Message               string
 	UsersNotFollowingBack []string
-	NotFollowingUsers      []string
+	NotFollowingUsers     []string
 }
 
 type User struct {
@@ -47,7 +47,7 @@ func notFound(c echo.Context) error {
 func main() {
 	e := echo.New()
 
-	e.Renderer = NewTemplateRenderer("public/layouts/base.html", "public/views/")
+	e.Renderer = NewTemplateRenderer("public/layouts/base.html", "public/views/", "public/components/")
 
 	e.GET("/", handler)
 	e.GET("/*", notFound)
@@ -94,15 +94,12 @@ func main() {
 		}
 
 		notFollowingBack := findUsersImNotFollowing(following.RelationshipsFollowing, followers)
-		fmt.Printf("Users i'm not following back: %+v\n", notFollowingBack)
-	
 		usersNotFollowingBack := findNotFollowingBack(followers, following.RelationshipsFollowing)
-		fmt.Printf("Users not following back: %+v\n", usersNotFollowingBack)
 
 		pageVariables := PageVariables{
-			Message:          "Files Uploaded",
+			Message:               "Files Uploaded",
 			UsersNotFollowingBack: usersNotFollowingBack,
-			NotFollowingUsers: notFollowingBack,
+			NotFollowingUsers:     notFollowingBack,
 		}
 
 		return c.Render(http.StatusOK, "main.html", pageVariables)
@@ -129,34 +126,34 @@ func findNotFollowingBack(followers []FollowersFile, following []FollowersFile) 
 }
 
 func findUsersImNotFollowing(followings []FollowersFile, followers []FollowersFile) []string {
-    followingsMap := make(map[string]bool)
+	followingsMap := make(map[string]bool)
 
-    for _, following := range followings {
-        followingsMap[following.StringListData[0].Value] = true
-    }
+	for _, following := range followings {
+		followingsMap[following.StringListData[0].Value] = true
+	}
 
-    var notFollowingBack []string
-    for _, follower := range followers {
-        if _, ok := followingsMap[follower.StringListData[0].Value]; !ok {
-            notFollowingBack = append(notFollowingBack, follower.StringListData[0].Value)
-        }
-    }
+	var notFollowingBack []string
+	for _, follower := range followers {
+		if _, ok := followingsMap[follower.StringListData[0].Value]; !ok {
+			notFollowingBack = append(notFollowingBack, follower.StringListData[0].Value)
+		}
+	}
 
-    fmt.Printf("Users I'm not following back: %+v\n", notFollowingBack)
-
-    return notFollowingBack
+	return notFollowingBack
 }
 
-func NewTemplateRenderer(baseTemplate, templateDir string) *TemplateRenderer {
+func NewTemplateRenderer(baseTemplate, templateDir, componentDir string) *TemplateRenderer {
 	return &TemplateRenderer{
 		baseTemplate: template.Must(template.ParseFiles(baseTemplate)),
 		templates:    template.Must(template.ParseGlob(templateDir + "*.html")),
+		components: template.Must(template.ParseGlob(componentDir + "*.html")),
 	}
 }
 
 type TemplateRenderer struct {
 	baseTemplate *template.Template
 	templates    *template.Template
+	components   *template.Template
 }
 
 func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
@@ -164,5 +161,9 @@ func (t *TemplateRenderer) Render(w io.Writer, name string, data interface{}, c 
 		return err
 	}
 
-	return t.templates.ExecuteTemplate(w, name, data)
+	if err := t.templates.ExecuteTemplate(w, name, data); err != nil {
+		return err
+	}
+
+	return t.components.ExecuteTemplate(w, "footer", data)
 }

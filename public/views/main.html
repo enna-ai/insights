@@ -1,34 +1,66 @@
 {{ define "title" }}Main{{ end }}
 
-<section id="instructions">
+<section>
     <h1>How to get started</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore illo possimus, quas odit ipsa nobis animi
-        dolorum consequuntur, eaque, sequi eius. Sunt doloremque illo quisquam! Deserunt beatae quis deleniti
-        distinctio.</p>
+    <div class="guide">
+        <blockquote>
+            <span class="numbers">1.</span> Go to your Instagram account settings, access <a class="highlight" href="https://i.imgur.com/2oqaqTR.jpg" target="_blank" rel="noopener noreferrer">Account Center</a>, and scroll down to choose <a class="highlight" href="https://i.imgur.com/KCqqz6v.jpg" target="_blank" rel="noopener noreferrer">Your Information and Permissions</a>.
+            <br />
+            <br />
+            <span class="numbers">2.</span> Click <a class="highlight" href="https://i.imgur.com/hexhEiv.jpg" target="_blank" rel="noopener noreferrer">Download Your Information</a>, then click <a class="highlight" href="https://i.imgur.com/nZS11WH.jpg" target="_blank" rel="noopener noreferrer">Request a Download.</a> Opt for <a class="highlight" href="https://i.imgur.com/vvxu9LR.jpg" target="_blank" rel="noopener noreferrer">Complete Copy</a> and <a class="highlight" href="https://i.imgur.com/yZN55dL.jpg" target="_blank" rel="noopener noreferrer">submit your request</a>.
+            <br />
+            <br />
+            <span class="numbers">3.</span> Once your data is ready <span class="quote">(typically within 5 minutes)</span>, download the file, unzip it, and open the folder.
+            <br />
+            <br />
+            <span class="numbers">4.</span> Find and open the <a class="highlight" href="https://i.imgur.com/VZPU73x.jpg" target="_blank" rel="noopener noreferrer">Connections</a> folder, followed uploading the <a class="highlight" href="https://i.imgur.com/LkxvBjB.jpg" target="_blank" rel="noopener noreferrer">followers_and_following</a> folder. Upload the specified files below.
+        </blockquote>
+    </div>
 </section>
 
-<hr />
-<br />
-
-<section id="checker">
+<section>
     <form action="/upload" method="post" enctype="multipart/form-data">
-        <label for="followers" class="file-label">Followers</label>
-        <input type="file" id="followers" name="followers">
+        <div class="input-container">
+            <label for="followers" class="file-label">
+                <div class="file-content">
+                    <svg class="numbers" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256">
+                        <path fill="currentColor"
+                            d="m212.48 136.49l-82.06 82a60 60 0 0 1-84.85-84.88l98.16-97.89a40 40 0 0 1 56.56 56.59l-.17.16l-95.8 92.22a12 12 0 1 1-16.64-17.3l95.71-92.12a16 16 0 0 0-22.7-22.56l-98.16 97.86a36 36 0 0 0 50.93 50.91l82.06-82a12 12 0 0 1 17 17Z" />
+                    </svg>
+                    Upload followers_1 file
+                </div>
+            </label>
+            <input type="file" id="followers" name="followers" accept=".json, .html, */*">
+        </div>
 
-        <label for="following" class="file-label">Followings</label>
-        <input type="file" id="following" name="following">
-
-        <input type="submit" value="Upload Files">
+        <div class="input-container">
+            <label for="following" class="file-label">
+                <div class="file-content">
+                    <svg class="numbers" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256">
+                        <path fill="currentColor"
+                            d="m212.48 136.49l-82.06 82a60 60 0 0 1-84.85-84.88l98.16-97.89a40 40 0 0 1 56.56 56.59l-.17.16l-95.8 92.22a12 12 0 1 1-16.64-17.3l95.71-92.12a16 16 0 0 0-22.7-22.56l-98.16 97.86a36 36 0 0 0 50.93 50.91l82.06-82a12 12 0 0 1 17 17Z" />
+                    </svg>
+                    Upload following file
+                </div>
+            </label>
+            <input type="file" id="following" name="following" accept=".json, .html, */*">
+        </div>
+        <button type="submit">Compare</button>
     </form>
+</section>
 
+<section id="result">
     <div class="result-container">
         {{ if .UsersNotFollowingBack }}
         <div class="header-container">
-            <h2>Users not following back:</h2>
+            <h4>Users not following back:</h4>
             <div class="scroll-list">
                 <ul>
                     {{ range .UsersNotFollowingBack }}
-                    <li>{{ . }}</li>
+                    <li>
+                        <a href="https://www.instagram.com/{{ . }}" target="_blank" rel="noopener noreferrer">{{ .
+                            }}</a>
+                    </li>
                     {{ end }}
                 </ul>
             </div>
@@ -37,11 +69,14 @@
 
         {{ if .NotFollowingUsers }}
         <div class="header-container">
-            <h2>You're not following back:</h2>
+            <h4>You're not following back:</h4>
             <div class="scroll-list">
                 <ul>
                     {{ range .NotFollowingUsers }}
-                    <li>{{ . }}</li>
+                    <li>
+                        <a href="https://www.instagram.com/{{ . }}" target="_blank" rel="noopener noreferrer">{{ .
+                            }}</a>
+                    </li>
                     {{ end }}
                 </ul>
             </div>
@@ -49,24 +84,172 @@
         {{ end }}
     </div>
 </section>
+
 <style>
+    .guide {
+        display: flex;
+        flex-direction: column;
+    }
+
+    blockquote {
+        background-color: var(--base1);
+        border-left: 5px solid var(--color);
+        margin: 0;
+        padding: 10px;
+    }
+
+    .numbers {
+        color: var(--color);
+        font-family: var(--font-mono);
+    }
+
+    .quote {
+        font-style: italic;
+    }
+
+    .highlight {
+        color: var(--color);
+        font-size: unset;
+    }
+
+    .highlight:hover {
+        text-decoration: underline;
+        color: var(--text);
+    }
+
+    #result {
+        display: flex;
+        flex-direction: column;
+    }
+
     .result-container {
         display: flex;
         flex-direction: row;
         gap: 20px;
     }
 
-    .scroll-list {
-        max-height: 200px;
-        overflow-y: auto;
-        border: 1px solid #ccc;
-        padding: 10px;
-        box-sizing: border-box;
+    form {
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        gap: 20px;
+    }
+
+    .input-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .file-content {
+        display: flex;
+        align-items: center;
+    }
+
+    input[type="file"] {
+        padding: 4px;
+        margin: -4px;
+        position: relative;
+        outline: none;
+        border: 1px dotted #ffffff20;
+    }
+
+    input[type="file"]::file-selector-button {
+        border: 0;
+        border-radius: var(--radius);
+        height: 30px;
+        padding: 0 16px;
+        background-color: var(--base1);
+        margin-right: 16px;
+        width: 132px;
+        color: var(--text);
+        cursor: pointer;
+    }
+
+    input[type="file"]::file-selector-button:hover {
+        background-color: var(--base1-bright);
+        outline: none;
+    }
+
+    button {
+        cursor: pointer;
+        margin: auto;
+        inset: 0;
+        border: 0;
+        border-radius: var(--radius);
+        color: var(--text);
+        background-color: var(--base1);
+        font-size: var(--md);
+        font-weight: 400;
+        line-height: 1;
+        padding: 12px 18px;
+        transition: var(--transition);
+        width: 150px;
+    }
+
+    button:hover {
+        background-color: var(--base1-bright);
+        outline: none;
     }
 
     .header-container {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
+        width: 100%;
+        gap: 20px;
+    }
+
+    h4 {
+        margin: 0;
+        position: relative;
+        padding-left: 20px;
+    }
+
+    h4::before {
+        content: "★";
+        position: absolute;
+        left: 0;
+        font-size: var(--md);
+        color: var(--color);
+    }
+
+    .scroll-list {
+        border: 1px dotted #ffffff20;
+        max-height: 250px;
+        overflow-y: auto;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    .scroll-list ul {
+        padding: 0;
+        list-style: none;
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    .scroll-list li {
+        border-bottom: 1px solid var(--base1);
+        padding: 8px 0;
+        position: relative;
+        padding-left: 20px;
+    }
+
+    .scroll-list li::before {
+        content: "＊";
+        position: absolute;
+        left: 0;
+        font-size: var(--md);
+        color: var(--color);
+    }
+
+    .scroll-list li:last-child {
+        border-bottom: none;
+    }
+
+    .scroll-list li a {
+        font-family: var(--font-mono);
+        font-size: var(--xs);
     }
 </style>
