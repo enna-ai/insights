@@ -1,5 +1,8 @@
-{{ define "title" }}Main{{ end }}
+{{ define "title"}}Main{{ end }}
 
+{{ template "layouts/base.html" }}
+
+{{ define "content" }}
 <section>
     <h1>How to get started</h1>
     <div class="guide">
@@ -7,7 +10,7 @@
             <span class="numbers">1.</span> Go to your Instagram account settings, access <a class="highlight" href="https://i.imgur.com/2oqaqTR.jpg" target="_blank" rel="noopener noreferrer">Account Center</a>, and scroll down to choose <a class="highlight" href="https://i.imgur.com/KCqqz6v.jpg" target="_blank" rel="noopener noreferrer">Your Information and Permissions</a>.
             <br />
             <br />
-            <span class="numbers">2.</span> Click <a class="highlight" href="https://i.imgur.com/hexhEiv.jpg" target="_blank" rel="noopener noreferrer">Download Your Information</a>, then click <a class="highlight" href="https://i.imgur.com/nZS11WH.jpg" target="_blank" rel="noopener noreferrer">Request a Download.</a> Opt for <a class="highlight" href="https://i.imgur.com/vvxu9LR.jpg" target="_blank" rel="noopener noreferrer">Complete Copy</a> and <a class="highlight" href="https://i.imgur.com/yZN55dL.jpg" target="_blank" rel="noopener noreferrer">submit your request</a>.
+            <span class="numbers">2.</span> Click <a class="highlight" href="https://i.imgur.com/hexhEiv.jpg" target="_blank" rel="noopener noreferrer">Download Your Information</a>, then click <a class="highlight" href="https://i.imgur.com/nZS11WH.jpg" target="_blank" rel="noopener noreferrer">Request a Download.</a> Select <a class="highlight" href="https://i.imgur.com/vvxu9LR.jpg" target="_blank" rel="noopener noreferrer">Complete Copy</a> and edit the <span class="quote">Date Range</span> to <span class="quote">All time</span> and finally, <a class="highlight" href="https://i.imgur.com/DzZlTDL.jpg" target="_blank" rel="noopener noreferrer">submit your request</a>.
             <br />
             <br />
             <span class="numbers">3.</span> Once your data is ready <span class="quote">(typically within 5 minutes)</span>, download the file, unzip it, and open the folder.
@@ -84,172 +87,4 @@
         {{ end }}
     </div>
 </section>
-
-<style>
-    .guide {
-        display: flex;
-        flex-direction: column;
-    }
-
-    blockquote {
-        background-color: var(--base1);
-        border-left: 5px solid var(--color);
-        margin: 0;
-        padding: 10px;
-    }
-
-    .numbers {
-        color: var(--color);
-        font-family: var(--font-mono);
-    }
-
-    .quote {
-        font-style: italic;
-    }
-
-    .highlight {
-        color: var(--color);
-        font-size: unset;
-    }
-
-    .highlight:hover {
-        text-decoration: underline;
-        color: var(--text);
-    }
-
-    #result {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .result-container {
-        display: flex;
-        flex-direction: row;
-        gap: 20px;
-    }
-
-    form {
-        display: flex;
-        flex-direction: column;
-        margin: auto;
-        gap: 20px;
-    }
-
-    .input-container {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .file-content {
-        display: flex;
-        align-items: center;
-    }
-
-    input[type="file"] {
-        padding: 4px;
-        margin: -4px;
-        position: relative;
-        outline: none;
-        border: 1px dotted #ffffff20;
-    }
-
-    input[type="file"]::file-selector-button {
-        border: 0;
-        border-radius: var(--radius);
-        height: 30px;
-        padding: 0 16px;
-        background-color: var(--base1);
-        margin-right: 16px;
-        width: 132px;
-        color: var(--text);
-        cursor: pointer;
-    }
-
-    input[type="file"]::file-selector-button:hover {
-        background-color: var(--base1-bright);
-        outline: none;
-    }
-
-    button {
-        cursor: pointer;
-        margin: auto;
-        inset: 0;
-        border: 0;
-        border-radius: var(--radius);
-        color: var(--text);
-        background-color: var(--base1);
-        font-size: var(--md);
-        font-weight: 400;
-        line-height: 1;
-        padding: 12px 18px;
-        transition: var(--transition);
-        width: 150px;
-    }
-
-    button:hover {
-        background-color: var(--base1-bright);
-        outline: none;
-    }
-
-    .header-container {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        width: 100%;
-        gap: 20px;
-    }
-
-    h4 {
-        margin: 0;
-        position: relative;
-        padding-left: 20px;
-    }
-
-    h4::before {
-        content: "★";
-        position: absolute;
-        left: 0;
-        font-size: var(--md);
-        color: var(--color);
-    }
-
-    .scroll-list {
-        border: 1px dotted #ffffff20;
-        max-height: 250px;
-        overflow-y: auto;
-        box-sizing: border-box;
-        width: 100%;
-    }
-
-    .scroll-list ul {
-        padding: 0;
-        list-style: none;
-        width: 100%;
-        padding: 0 20px;
-    }
-
-    .scroll-list li {
-        border-bottom: 1px solid var(--base1);
-        padding: 8px 0;
-        position: relative;
-        padding-left: 20px;
-    }
-
-    .scroll-list li::before {
-        content: "＊";
-        position: absolute;
-        left: 0;
-        font-size: var(--md);
-        color: var(--color);
-    }
-
-    .scroll-list li:last-child {
-        border-bottom: none;
-    }
-
-    .scroll-list li a {
-        font-family: var(--font-mono);
-        font-size: var(--xs);
-    }
-</style>
+{{ end }}
