@@ -52,14 +52,14 @@
     </form>
 </section>
 
-<section id="result">
+<section>
     <div class="result-container">
-        {{ if .UsersNotFollowingBack }}
+        {{ if .UsersNotFollowingMeBack }}
         <div class="header-container">
             <h4>Users not following back:</h4>
             <div class="scroll-list">
                 <ul>
-                    {{ range .UsersNotFollowingBack }}
+                    {{ range .UsersNotFollowingMeBack }}
                     <li>
                         <a href="https://www.instagram.com/{{ . }}" target="_blank" rel="noopener noreferrer">{{ .
                             }}</a>
@@ -70,12 +70,12 @@
         </div>
         {{ end }}
 
-        {{ if .NotFollowingUsers }}
+        {{ if .UsersImNotFollowingBack }}
         <div class="header-container">
             <h4>You're not following back:</h4>
             <div class="scroll-list">
                 <ul>
-                    {{ range .NotFollowingUsers }}
+                    {{ range .UsersImNotFollowingBack }}
                     <li>
                         <a href="https://www.instagram.com/{{ . }}" target="_blank" rel="noopener noreferrer">{{ .
                             }}</a>

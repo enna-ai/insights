@@ -34,32 +34,32 @@ func (t *templateRenderer) Render(w io.Writer, name string, data interface{}, c 
 }
 
 func (t *templateRenderer) Load(layoutsDir, templatesDir string) {
-    layouts, err := filepath.Glob(layoutsDir + "/*.html")
-    if err != nil {
-        log.Fatal(err)
-    }
+	layouts, err := filepath.Glob(layoutsDir + "/*.html")
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    includes, err := filepath.Glob(templatesDir + "/*.html")
-    if err != nil {
-        log.Fatal(err)
-    }
+	includes, err := filepath.Glob(templatesDir + "/*.html")
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    mainTemplate := template.New("main")
+	mainTemplate := template.New("main")
 
-    mainTemplate, err = mainTemplate.Parse(mainTmpl)
-    if err != nil {
-        log.Fatal(err)
-    }
+	mainTemplate, err = mainTemplate.Parse(mainTmpl)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    for _, file := range includes {
-        fileName := filepath.Base(file)
-        files := append(layouts, file)
-        t.templates[fileName], err = mainTemplate.Clone()
+	for _, file := range includes {
+		fileName := filepath.Base(file)
+		files := append(layouts, file)
+		t.templates[fileName], err = mainTemplate.Clone()
 
-        if err != nil {
-            log.Fatal(err)
-        }
+		if err != nil {
+			log.Fatal(err)
+		}
 
-        t.templates[fileName] = template.Must(t.templates[fileName].ParseFiles(files...))
-    }
+		t.templates[fileName] = template.Must(t.templates[fileName].ParseFiles(files...))
+	}
 }

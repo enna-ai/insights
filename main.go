@@ -1,24 +1,15 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
-	
-	"github.com/labstack/echo/v4"
+
 	"github.com/enna-ai/instacheck/core"
+	"github.com/labstack/echo/v4"
 )
 
-type PageVariables struct {
-	Message               string
-	UsersNotFollowingBack []string
-	NotFollowingUsers     []string
-}
-
 func handler(c echo.Context) error {
-	pageVariables := PageVariables{
-		Message: "GO",
-	}
-
-	return c.Render(http.StatusOK, "main.html", pageVariables)
+	return c.Render(http.StatusOK, "main.html", nil)
 }
 
 func notFound(c echo.Context) error {
@@ -32,6 +23,20 @@ func main() {
 
 	e.GET("/", handler)
 	e.GET("/*", notFound)
+	e.POST("/upload", func(c echo.Context) error {
+		usersImNotFollowingBack, usersNotFollowingMeBack, err := core.ParseJSONFiles(c)
+		if err != nil {
+			fmt.Printf("Error %s\n", err)
+			return err
+		}
+
+		results := core.PageVariables{
+			UsersNotFollowingMeBack: usersNotFollowingMeBack,
+			UsersImNotFollowingBack: usersImNotFollowingBack,
+		}
+
+		return c.Render(http.StatusOK, "main.html", results)
+	})
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
