@@ -12,14 +12,14 @@ func AnalyzeInstagramFollowersJSON(c echo.Context) ([]string, []string, error) {
 
 	err := parseJSONFile(c, "followers", &followers)
 	if err != nil {
-		fmt.Printf("Error parsing followers: %s\n", err)
-		return nil, nil, err
+		return nil, nil, fmt.Errorf("error (2): Invalid JSON")
+		// return nil, nil, err
 	}
 
 	err = parseJSONFile(c, "following", &followings)
 	if err != nil {
-		fmt.Printf("Error parsing followings: %s\n", err)
-		return nil, nil, err
+		return nil, nil, fmt.Errorf("error (2): Invalid JSON")
+		// return nil, nil, err
 	}
 
 	return CheckFollowStatusJSON(followings.RelationshipsFollowing, followers), CheckFollowStatusJSON(followers, followings.RelationshipsFollowing), nil
@@ -46,28 +46,28 @@ func CheckFollowStatusJSON(followersFile, followingsFile []FollowersFile) []stri
 func AnalyzeInstagramFollowersHTML(c echo.Context) ([]string, []string, error) {
 	followers, err := parseHTMLFile(c, "followers")
 	if err != nil {
-		fmt.Printf("Error parsing followers HTML: %s\n", err)
-		return nil, nil, err
+		return nil, nil, fmt.Errorf("error (2): Invalid HTML")
+		// return nil, nil, err
 	}
 
 	followings, err := parseHTMLFile(c, "following")
 	if err != nil {
-		fmt.Printf("Error parsing following HTML: %s\n", err)
-		return nil, nil, err
+		return nil, nil, fmt.Errorf("error (2): Invalid HTML")
+		// return nil, nil, err
 	}
 
 	return followers, followings, nil
 }
 
-func CheckFollowStatusHTML(fileA, fileB []string) []string {
+func CheckFollowStatusHTML(followersFile, followingsFile []string) []string {
 	m := make(map[string]struct{})
 	var result []string
 
-	for _, a := range fileA {
+	for _, a := range followersFile {
 		m[a] = struct{}{}
 	}
 
-	for _, b := range fileB {
+	for _, b := range followingsFile {
 		if _, ok := m[b]; !ok {
 			result = append(result, b)
 		}

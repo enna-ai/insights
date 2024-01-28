@@ -50,6 +50,8 @@
         </div>
         <button type="submit">Compare</button>
     </form>
+
+    <div id="errorMessage"></div>
 </section>
 
 <section>
@@ -87,4 +89,15 @@
         {{ end }}
     </div>
 </section>
+
+<script>
+    let serverErrorMessage = "{{ .ErrorMessage }}"
+    if (serverErrorMessage !== "") {
+        const errorElement = document.createElement("p");
+
+        errorElement.innerHTML = serverErrorMessage;
+
+        document.getElementById("errorMessage").appendChild(errorElement);
+    }
+</script>
 {{ end }}
