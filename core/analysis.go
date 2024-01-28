@@ -13,13 +13,11 @@ func AnalyzeInstagramFollowersJSON(c echo.Context) ([]string, []string, error) {
 	err := parseJSONFile(c, "followers", &followers)
 	if err != nil {
 		return nil, nil, fmt.Errorf("error (2): Invalid JSON")
-		// return nil, nil, err
 	}
 
 	err = parseJSONFile(c, "following", &followings)
 	if err != nil {
 		return nil, nil, fmt.Errorf("error (2): Invalid JSON")
-		// return nil, nil, err
 	}
 
 	return CheckFollowStatusJSON(followings.RelationshipsFollowing, followers), CheckFollowStatusJSON(followers, followings.RelationshipsFollowing), nil
@@ -47,13 +45,11 @@ func AnalyzeInstagramFollowersHTML(c echo.Context) ([]string, []string, error) {
 	followers, err := parseHTMLFile(c, "followers")
 	if err != nil {
 		return nil, nil, fmt.Errorf("error (2): Invalid HTML")
-		// return nil, nil, err
 	}
 
 	followings, err := parseHTMLFile(c, "following")
 	if err != nil {
 		return nil, nil, fmt.Errorf("error (2): Invalid HTML")
-		// return nil, nil, err
 	}
 
 	return followers, followings, nil
