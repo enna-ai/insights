@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+:root {
+  --background: #26233a;
+  --base1: #393552;
+  --base1-bright: #3e3a5a;
+  --text: #e0def4;
+  --text-trans: #e0def4b0;
+  --color: #ebbcba;
+
+  --xxs: 12px;
+  --xs: 13px;
+  --sm: 14px;
+  --md: 16px;
+  --lg: 18px;
+  --xl: 20px;
+  --xxl: 22px;
+  --md-heading: 32px;
+
+  --radius: 0.2rem;
+  --horizontal-margin: 10%;
+  --transition: all 0.2s ease-in-out;
+
+  --font-sans: "Roboto", sans-serif;
+  --font-mono: "Roboto Mono", monospace;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 100%;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--base1);
+  border: 3px solid var(--background);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--base1-bright);
+}
+
+html {
+  overflow-y: overlay;
+  height: -webkit-fill-available;
+  height: stretch;
+  height: fill-available;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+
+  width: 100%;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  min-height: stretch;
+  min-height: fill-available;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0;
+
+  word-spacing: 2px;
+}
+
+section {
+  margin: 1.5em
+    min(var(--margin, var(--horizontal-margin)), var(--horizontal-margin));
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  margin: 0 0 10px 0;
+}
+
+@media screen and (max-width: 800px) {
+  body {
+    --horizontal-margin: 5%;
+  }
+}

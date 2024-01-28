@@ -53,5 +53,6 @@ func main() {
 		return c.Render(http.StatusOK, "main.html", results)
 	})
 
+	e.Static("/public", core.GetPath("/public"))
 	e.Logger.Fatal(e.Start(":8080"))
 }
