@@ -24,15 +24,29 @@ func main() {
 	e.GET("/", handler)
 	e.GET("/*", notFound)
 	e.POST("/upload", func(c echo.Context) error {
-		usersImNotFollowingBack, usersNotFollowingMeBack, err := core.ParseJSONFiles(c)
+		followersHTML, followingsHTML, err := core.AnalyzeInstagramFollowersHTML(c)
 		if err != nil {
-			fmt.Printf("Error %s\n", err)
+			fmt.Printf("Error parsing HTML: %s\n", err)
 			return err
 		}
 
-		results := core.PageVariables{
-			UsersNotFollowingMeBack: usersNotFollowingMeBack,
-			UsersImNotFollowingBack: usersImNotFollowingBack,
+		var results core.PageVariables
+
+		if len(followersHTML) > 0 && len(followingsHTML) > 0 {
+			usersImNotFollowingBackHTML := core.CheckFollowStatusHTML(followingsHTML, followersHTML)
+			usersNotFollowingMeBackHTML := core.CheckFollowStatusHTML(followersHTML, followingsHTML)
+
+			results.UsersNotFollowingMeBack = usersNotFollowingMeBackHTML
+			results.UsersImNotFollowingBack = usersImNotFollowingBackHTML
+		} else {
+			usersImNotFollowingBackJSON, usersNotFollowingMeBackJSON, err := core.AnalyzeInstagramFollowersJSON(c)
+			if err != nil {
+				fmt.Printf("Error parsing JSON: %s\n", err)
+				return err
+			}
+
+			results.UsersNotFollowingMeBack = usersNotFollowingMeBackJSON
+			results.UsersImNotFollowingBack = usersImNotFollowingBackJSON
 		}
 
 		return c.Render(http.StatusOK, "main.html", results)
