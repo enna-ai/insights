@@ -5,16 +5,19 @@
     <h1>How to get started</h1>
     <div class="guide">
         <blockquote>
-            <span class="numbers">1.</span> Go to your Instagram account settings, access <a class="highlight" href="https://i.imgur.com/2oqaqTR.jpg" target="_blank" rel="noopener noreferrer">Account Center</a>, and scroll down to choose <a class="highlight" href="https://i.imgur.com/KCqqz6v.jpg" target="_blank" rel="noopener noreferrer">Your Information and Permissions</a>.
+            <span class="numbers">1.</span> Go to your Instagram account settings, access your <a class="highlight" href="https://i.imgur.com/2oqaqTR.jpg" target="_blank" rel="noopener noreferrer">Account Center</a>, scroll down and tap on <a class="highlight" href="https://i.imgur.com/KCqqz6v.jpg" target="_blank" rel="noopener noreferrer">Your Information and Permissions</a> tab.
             <br />
             <br />
-            <span class="numbers">2.</span> Click <a class="highlight" href="https://i.imgur.com/hexhEiv.jpg" target="_blank" rel="noopener noreferrer">Download Your Information</a>, then click <a class="highlight" href="https://i.imgur.com/nZS11WH.jpg" target="_blank" rel="noopener noreferrer">Request a Download.</a> Select <a class="highlight" href="https://i.imgur.com/vvxu9LR.jpg" target="_blank" rel="noopener noreferrer">Complete Copy</a> and edit the <span class="quote">Date Range</span> to <span class="quote">All time</span> and finally, <a class="highlight" href="https://i.imgur.com/DzZlTDL.jpg" target="_blank" rel="noopener noreferrer">submit your request</a>.
+            <span class="numbers">2.</span> Click on <a class="highlight" href="https://i.imgur.com/hexhEiv.jpg" target="_blank" rel="noopener noreferrer">Download Your Information</a>, then click on <a class="highlight" href="https://i.imgur.com/nZS11WH.jpg" target="_blank" rel="noopener noreferrer">Request a Download</a>, then select <a class="highlight" href="https://i.imgur.com/vvxu9LR.jpg" target="_blank" rel="noopener noreferrer">Complete Copy</a> and edit the <span class="quote">Date Range</span> to <span class="quote">All time</span> and finally, <a class="highlight" href="https://i.imgur.com/DzZlTDL.jpg" target="_blank" rel="noopener noreferrer">submit your request</a>.
             <br />
             <br />
             <span class="numbers">3.</span> Once your data is ready <span class="quote">(typically within 5 minutes)</span>, download the file, unzip it, and open the folder.
             <br />
             <br />
-            <span class="numbers">4.</span> Find and open the <a class="highlight" href="https://i.imgur.com/VZPU73x.jpg" target="_blank" rel="noopener noreferrer">Connections</a> folder, followed uploading the <a class="highlight" href="https://i.imgur.com/LkxvBjB.jpg" target="_blank" rel="noopener noreferrer">followers_and_following</a> folder. Upload the specified files below.
+            <span class="numbers">4.</span> Find and open the <a class="highlight" href="https://i.imgur.com/VZPU73x.jpg" target="_blank" rel="noopener noreferrer">Connections</a> folder, then open the <a class="highlight" href="https://i.imgur.com/LkxvBjB.jpg" target="_blank" rel="noopener noreferrer">followers_and_following</a> folder.
+            <br />
+            <br />
+            <span class="numbers">5.</span> Upload the <span class="highlight">followers_1</span> and <span class="highlight">following</span> files (HTML or JSON file formats) and click on the <span class="highlight">Analyze</span> button to start analyzing.
         </blockquote>
     </div>
 </section>
@@ -23,12 +26,12 @@
     <form action="/upload" method="post" enctype="multipart/form-data">
         <div class="input-container">
             <label for="followers" class="file-label">
-                <div class="file-content">
-                    <svg class="numbers" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256">
+                <div class="input-body">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256">
                         <path fill="currentColor"
                             d="m212.48 136.49l-82.06 82a60 60 0 0 1-84.85-84.88l98.16-97.89a40 40 0 0 1 56.56 56.59l-.17.16l-95.8 92.22a12 12 0 1 1-16.64-17.3l95.71-92.12a16 16 0 0 0-22.7-22.56l-98.16 97.86a36 36 0 0 0 50.93 50.91l82.06-82a12 12 0 0 1 17 17Z" />
                     </svg>
-                    Upload followers_1 file
+                    <p>Upload <span class="highlight">followers_1</span> file</p>
                 </div>
             </label>
             <input type="file" id="followers" name="followers" accept=".json, .html, */*">
@@ -36,17 +39,17 @@
 
         <div class="input-container">
             <label for="following" class="file-label">
-                <div class="file-content">
-                    <svg class="numbers" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256">
+                <div class="input-body">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256">
                         <path fill="currentColor"
                             d="m212.48 136.49l-82.06 82a60 60 0 0 1-84.85-84.88l98.16-97.89a40 40 0 0 1 56.56 56.59l-.17.16l-95.8 92.22a12 12 0 1 1-16.64-17.3l95.71-92.12a16 16 0 0 0-22.7-22.56l-98.16 97.86a36 36 0 0 0 50.93 50.91l82.06-82a12 12 0 0 1 17 17Z" />
                     </svg>
-                    Upload following file
+                    <p>Upload <span class="highlight">following</span> file</p>
                 </div>
             </label>
             <input type="file" id="following" name="following" accept=".json, .html, */*">
         </div>
-        <button type="submit">Compare</button>
+        <button type="submit">Analyze</button>
     </form>
 
     <div id="errorMessage"></div>
@@ -55,9 +58,9 @@
 <section>
     <div class="result-container">
         {{ if .UsersNotFollowingMeBack }}
-        <div class="header-container">
-            <h4>Users not following back:</h4>
-            <div class="scroll-list">
+        <div class="result-body">
+            <h4 class="result-header">Users not following back:</h4>
+            <div class="result-scroll-list">
                 <ul>
                     {{ range .UsersNotFollowingMeBack }}
                     <li>
@@ -71,9 +74,9 @@
         {{ end }}
 
         {{ if .UsersImNotFollowingBack }}
-        <div class="header-container">
-            <h4>You're not following back:</h4>
-            <div class="scroll-list">
+        <div class="result-body">
+            <h4 class="result-header">You're not following back:</h4>
+            <div class="result-scroll-list">
                 <ul>
                     {{ range .UsersImNotFollowingBack }}
                     <li>
