@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/enna-ai/instacheck/core"
@@ -27,7 +26,6 @@ func main() {
 	e.POST("/upload", func(c echo.Context) error {
 		followersHTML, followingsHTML, err := core.AnalyzeInstagramFollowersHTML(c)
 		if err != nil {
-			fmt.Printf("Error parsing HTML: %s\n", err)
 			return c.Render(http.StatusBadRequest, "main.html", map[string]interface{} {
 				"ErrorMessage": "Oops! Something went wrong. Please check your file uploads and try again. Refer to the instructions above.",
 			})
@@ -44,7 +42,6 @@ func main() {
 		} else {
 			usersImNotFollowingBackJSON, usersNotFollowingMeBackJSON, err := core.AnalyzeInstagramFollowersJSON(c)
 			if err != nil {
-				fmt.Printf("Error parsing JSON: %s\n", err)
 				return c.Render(http.StatusBadRequest, "main.html", map[string]interface{} {
 					"ErrorMessage": "Oops! Something went wrong. Please check your file uploads and try again. Refer to the instructions above.",
 				})
@@ -57,5 +54,5 @@ func main() {
 		return c.Render(http.StatusOK, "main.html", results)
 	})
 
-	e.Logger.Fatal(e.Start(":8080"))
+	e.Logger.Fatal(e.Start("0.0.0.0:8080"))
 }

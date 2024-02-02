@@ -1,7 +1,5 @@
 {{ define "title"}}Error{{ end }}
 
-{{ template "layouts/base.html" }}
-
 {{ define "content" }}
 <section>
     <div class="notFound">
@@ -10,7 +8,6 @@
         <a href="/">$cd home</a>
     </div>
 </section>
-{{ end }}
 
 <script>
     const emojiArray = [
@@ -31,3 +28,4 @@
         emoji.innerHTML = emojiArray[Math.floor(Math.random() * emojiArray.length)];
     }
 </script>
+{{ end }}
