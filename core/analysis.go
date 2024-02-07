@@ -25,16 +25,16 @@ func AnalyzeInstagramFollowersJSON(c echo.Context) ([]string, []string, error) {
 	return CheckFollowStatusJSON(followings.RelationshipsFollowing, followers), CheckFollowStatusJSON(followers, followings.RelationshipsFollowing), nil
 }
 
-func CheckFollowStatusJSON(followersFile, followingsFile []FollowersFile) []string {
+func CheckFollowStatusJSON(followingsFile, followersFile []FollowersFile) []string {
 	m := make(map[string]bool)
 
-	for _, a := range followersFile {
+	for _, a := range followingsFile {
 		m[a.StringListData[0].Value] = true
 	}
 
 	var result []string
 
-	for _, b := range followingsFile {
+	for _, b := range followersFile {
 		if _, ok := m[b.StringListData[0].Value]; !ok {
 			result = append(result, b.StringListData[0].Value)
 		}
@@ -59,15 +59,15 @@ func AnalyzeInstagramFollowersHTML(c echo.Context) ([]string, []string, error) {
 	return followers, followings, nil
 }
 
-func CheckFollowStatusHTML(fileA, fileB []string) []string {
+func CheckFollowStatusHTML(followFileA, followFileB []string) []string {
 	m := make(map[string]struct{})
 	var result []string
 
-	for _, a := range fileA {
+	for _, a := range followFileA {
 		m[a] = struct{}{}
 	}
 
-	for _, b := range fileB {
+	for _, b := range followFileB {
 		if _, ok := m[b]; !ok {
 			result = append(result, b)
 		}
